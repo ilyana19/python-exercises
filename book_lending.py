@@ -28,7 +28,7 @@ class Book:
   
   def current_due_date(self):
     now = datetime.now()
-    two_weeks = 60 * 60 * 24 * 14 # two weeks expressed in seconds  
+    # two_weeks = 60 * 60 * 24 * 14 # two weeks expressed in seconds
     # future_timestamp = now.timestamp() + two_weeks
     future_timestamp = now.timestamp() # for testing overdue list
     return datetime.fromtimestamp(future_timestamp)
