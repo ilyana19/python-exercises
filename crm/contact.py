@@ -22,44 +22,41 @@ class Contact:
 
   @classmethod
   def all(cls):
-    """This method should return all of the existing contacts"""
+    for contact in cls.contacts:
+      print(contact)
 
   @classmethod
-  def find(cls):
-    """ This method should accept an id as an argument
-    and return the contact who has that id
-    """
+  def find(cls, id):
+    for contact in cls.contacts:
+      if id == contact.id:
+        return contact
 
-  def update(self):
-    """ This method should allow you to specify
-    1. which of the contact's attributes you want to update
-    2. the new value for that attribute
-    and then make the appropriate change to the contact
-    """
+  def update(self, attribute, value):
+    setattr(self, attribute, value)
+    return self
 
 
   @classmethod
-  def find_by(cls):
-    """This method should work similarly to the find method above
-    but it should allow you to search for a contact using attributes other than id
-    by specifying both the name of the attribute and the value
-    eg. searching for 'first_name', 'Betty' should return the first contact named Betty
-    """
+  def find_by(cls, attribute, value):
+    for contact in cls.contacts:
+      if getattr(contact, attribute) == value:
+        return contact
 
 
   @classmethod
   def delete_all(cls):
-    """This method should delete all of the contacts"""
+    del cls.contacts[:] # supposedly faster way
+    # cls.contacts.clear()
+    return print("Removed all items")
 
 
   def full_name(self):
-    """Returns the full (first and last) name of the contact"""
+    return f"{self.first_name} {self.last_name}"
 
 
   def delete(self):
-    """This method should delete the contact
-    HINT: Check the Array class docs for built-in methods that might be useful here
-    """
+    Contact.contacts.remove(self)
+    return print("Conact removed")
 
   # Feel free to add other methods here, if you need them.
 
@@ -72,3 +69,26 @@ print(len(Contact.contacts))
 print(contact1.id)
 print(contact2.id)
 print(Contact.contacts)
+print("\n")
+Contact.all()
+print("\n")
+
+print(Contact.find(2))
+print(Contact.find(2).full_name())
+Contact.find(2).update('note', 'beep boop beep boop')
+print("\n")
+Contact.all()
+print("\n")
+
+print(Contact.find_by('first_name', 'Betty'))
+print(Contact.find_by('email', 'bettymakes@bitmakerlabs.com'))
+print("\n")
+Contact.all()
+print("\n")
+Contact.find(2).delete()
+Contact.all()
+print("\n")
+
+print("---------------")
+Contact.delete_all()
+Contact.all()
