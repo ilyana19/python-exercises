@@ -15,6 +15,7 @@ class CRM:
     print('[4] Display all the contacts')
     print('[5] Search by attribute')
     print('[6] Exit')
+    print("")
     print('Enter a number: ', end = '')
 
   def call_option(self, user_selected):
@@ -32,6 +33,10 @@ class CRM:
       exit()
 
   def add_new_contact(self):
+    print('\n-----------------------')
+    print("Add New Contact")
+    print('-----------------------')
+
     print("Enter First Name: ", end = '')
     first_name = input()
     print("Enter Last Name: ", end = '')
@@ -42,16 +47,48 @@ class CRM:
     note = input()
 
     Contact.create(first_name, last_name, email, note)
+    print("\n")
   
+  @classmethod
   def modify_existing_contact(self):
-    return
+    print('\n-----------------------')
+    print("Modify Contact")
+    print('-----------------------')
+
+    print("Enter the ID of the contact to edit: ", end = '')
+    id = int(input())
+    contact = Contact.find(id)
+    attribute = input("Enter the attribute to edit: ")
+    value = input("Enter the new value: ")
+    print('\n-----------------------')
+    setattr(contact, attribute, value)
+    return contact.update
   
-  # def delete_contact(self):
-  #
-  #
-  # def display_all_contacts(self):
-  #
-  # def search_by_attribute(self):
+  def delete_contact(self):
+    print('\n-----------------------')
+    print("Delete Contact")
+    print('-----------------------')
+    print("Enter the ID to delete: ", end = '')
+    contact_id = int(input())
+    Contact.find(contact_id).delete()
+    print('\n-----------------------')
+  
+  def display_all_contacts(self):
+    print('\n-----------------------')
+    print("Display All Contact")
+    print('-----------------------')
+    print(Contact.all())
+    print('\n-----------------------')
+  
+  def search_by_attribute(self):
+    print('\n-----------------------')
+    print("Search Contact")
+    print('-----------------------')
+    attribute = input("Enter the attribute to search: ")
+    value = input("Enter the value: ")
+    print('-----------------------')
+    print(Contact.find_by(attribute, value))
+    print('\n-----------------------')
 
 crm_app = CRM()
 crm_app.main_menu()
