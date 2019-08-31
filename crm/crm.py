@@ -46,7 +46,12 @@ class CRM:
     print("Enter Note: ", end = '')
     note = input()
 
-    Contact.create(first_name, last_name, email, note)
+    Contact.create(
+      first_name=first_name,
+      last_name=last_name,
+      email=email,
+      note=note
+    )
     print("\n")
   
   @classmethod
@@ -57,7 +62,7 @@ class CRM:
 
     print("Enter the ID of the contact to edit: ", end = '')
     id = int(input())
-    contact = Contact.find(id)
+    contact = Contact.get(id)
     attribute = input("Enter the attribute to edit: ")
     value = input("Enter the new value: ")
     print('\n-----------------------')
@@ -77,7 +82,15 @@ class CRM:
     print('\n-----------------------')
     print("Display All Contact")
     print('-----------------------')
-    print(Contact.all())
+
+    for contact in Contact.select():
+      print(
+        contact.id, " | ", 
+        contact.first_name, contact.last_name, " | ", 
+        contact.email, " | ", 
+        contact.note
+      )
+
     print('\n-----------------------')
   
   def search_by_attribute(self):
