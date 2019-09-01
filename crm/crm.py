@@ -67,7 +67,7 @@ class CRM:
     value = input("Enter the new value: ")
     print('\n-----------------------')
     setattr(contact, attribute, value)
-    return contact.update
+    contact.save()
   
   def delete_contact(self):
     print('\n-----------------------')
@@ -75,7 +75,7 @@ class CRM:
     print('-----------------------')
     print("Enter the ID to delete: ", end = '')
     contact_id = int(input())
-    Contact.find(contact_id).delete()
+    Contact.get(contact_id).delete_instance()
     print('\n-----------------------')
   
   def display_all_contacts(self):
@@ -100,7 +100,26 @@ class CRM:
     attribute = input("Enter the attribute to search: ")
     value = input("Enter the value: ")
     print('-----------------------')
-    print(Contact.find_by(attribute, value))
+    
+    if attribute == 'id':
+      contact = Contact.select().where(Contact.id == value)
+    elif attribute == 'first_name':
+      contact = Contact.select().where(Contact.first_name == value)
+    elif attribute == 'last_name':
+      contact = Contact.select().where(Contact.last_name == value)
+    elif attribute == 'email':
+      contact = Contact.select().where(Contact.email == value)
+    elif attribute == 'note':
+      contact = Contact.select().where(Contact.note == value)
+
+    for person in contact:
+      print(
+        person.id, " | ", 
+        person.first_name, person.last_name, " | ", 
+        person.email, " | ", 
+        person.note
+      )
+    
     print('\n-----------------------')
 
 crm_app = CRM()
